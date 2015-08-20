@@ -30,7 +30,15 @@ function xyz_link_publish($post_ID) {
 	if(isset($_POST['xyz_smap_post_permission']))
 		$post_permissin=$_POST['xyz_smap_post_permission'];
 	
-	if ($post_permissin != 1) {
+	$post_twitter_permission=get_option('xyz_smap_twpost_permission');
+	if(isset($_POST['xyz_smap_twpost_permission']))
+		$post_twitter_permission=$_POST['xyz_smap_twpost_permission'];
+	
+	$lnpost_permission=get_option('xyz_smap_lnpost_permission');
+	if(isset($_POST['xyz_smap_lnpost_permission']))
+		$lnpost_permission=$_POST['xyz_smap_lnpost_permission'];
+	
+	if (($post_permissin != 1)&&($post_twitter_permission != 1)&&($lnpost_permission != 1)) {
 		$_POST=$_POST_CPY;
 		return ;
 	
@@ -62,10 +70,6 @@ function xyz_link_publish($post_ID) {
 	$appid=get_option('xyz_smap_application_id');
 	
 	
-	$post_twitter_permission=get_option('xyz_smap_twpost_permission');
-	if(isset($_POST['xyz_smap_twpost_permission']))
-		$post_twitter_permission=$_POST['xyz_smap_twpost_permission'];
-
 	$post_twitter_image_permission=get_option('xyz_smap_twpost_image_permission');
 	if(isset($_POST['xyz_smap_twpost_image_permission']))
 		$post_twitter_image_permission=$_POST['xyz_smap_twpost_image_permission'];
@@ -105,10 +109,6 @@ function xyz_link_publish($post_ID) {
   $xyz_smap_ln_sharingmethod=$_POST['xyz_smap_ln_sharingmethod'];
   
 
-  $lnpost_permission=get_option('xyz_smap_lnpost_permission');
-  if(isset($_POST['xyz_smap_lnpost_permission']))
-  	$lnpost_permission=$_POST['xyz_smap_lnpost_permission'];
-  
   $post_ln_image_permission=get_option('xyz_smap_lnpost_image_permission');
   if(isset($_POST['xyz_smap_lnpost_image_permission']))
   	$post_ln_image_permission=$_POST['xyz_smap_lnpost_image_permission'];
@@ -189,6 +189,9 @@ function xyz_link_publish($post_ID) {
 		$excerpt = $postpp->post_excerpt;
 		if($exc_flag==1)
 			$excerpt = apply_filters('the_excerpt', $excerpt);
+		
+		$content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $content);
+		$excerpt = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $excerpt);
 		
 		if($excerpt=="")
 		{
