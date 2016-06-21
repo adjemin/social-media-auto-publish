@@ -102,6 +102,7 @@ if(isset($_COOKIE['xyz_smap_session_state']) && isset($_REQUEST['state']) && ($_
            				$newpgs=-1;
 					}
 		update_option('xyz_smap_pages_ids',$newpgs);
+		header("Location:".admin_url('admin.php?page=facebook-auto-publish-settings&auth=1'));
 	}
 	else {
 		

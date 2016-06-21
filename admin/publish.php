@@ -208,7 +208,7 @@ function xyz_link_publish($post_ID) {
 				$carr=explode(',', $xyz_smap_include_customposttypes);
 				
 				if(!in_array($posttype, $carr))
-					return;
+					$_POST=$_POST_CPY;return;
 			}
 			else
 			{
