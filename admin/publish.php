@@ -259,6 +259,7 @@ function xyz_link_publish($post_ID) {
 			$excerpt = apply_filters('the_excerpt', $excerpt);
 		$excerpt = html_entity_decode($excerpt, ENT_QUOTES, get_bloginfo('charset'));
 		$content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $content);
+		$content=  preg_replace("/\\[caption.*?\\].*?\\[.caption\\]/is", "", $content);
 		$content = preg_replace('/\[.+?\]/', '', $content);
 		$excerpt = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $excerpt);
 		
@@ -345,9 +346,10 @@ function xyz_link_publish($post_ID) {
 				$message4=str_replace('{POST_EXCERPT}', $excerpt, $message3);
 				$message5=str_replace('{POST_CONTENT}', $description, $message4);
 				$message5=str_replace('{USER_NICENAME}', $user_nicename, $message5);
-				
+				$message5=str_replace('{POST_ID}', $post_ID, $message5);
+				$publish_time=get_the_time('Y/m/d',$post_ID );
+				$message5=str_replace('{POST_PUBLISH_DATE}', $publish_time, $message5);
 				$message5=str_replace("&nbsp;","",$message5);
-
                $disp_type="feed";
 				if($posting_method==1) //attach
 				{
@@ -585,9 +587,8 @@ function xyz_link_publish($post_ID) {
 			$substring=xyz_smap_split_replace('{POST_CONTENT}', $description, $substring);
 			$substring=str_replace('{USER_NICENAME}', $user_nicename, $substring);
 			$substring=str_replace('{POST_ID}', $post_ID, $substring);
-			$substring=str_replace('{POST_TAGS}', $post_tags, $substring);
-			$substring=str_replace('{POST_CATEGORY}', $POST_CATEGORY, $substring);
-			$substring=str_replace('{SHORTLINK}', $shortlink, $substring);
+			$publish_time=get_the_time('Y/m/d',$post_ID );
+			$substring=str_replace('{POST_PUBLISH_DATE}', $publish_time, $substring);
 			
 			preg_match_all($reg_exUrl,$substring,$matches); // @ is same as /
 			
@@ -821,6 +822,9 @@ function xyz_link_publish($post_ID) {
 			$message5=str_replace('{POST_CONTENT}', $description, $message4);
 			$message5=str_replace('{USER_NICENAME}', $user_nicename, $message5);
 			
+			$publish_time=get_the_time('Y/m/d',$post_ID );
+			$message5=str_replace('{POST_PUBLISH_DATE}', $publish_time, $message5);
+			$message5=str_replace('{POST_ID}', $post_ID, $message5);
 			$message5=str_replace("&nbsp;","",$message5);
 						
 				$contentln['comment'] =$message5;

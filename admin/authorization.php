@@ -172,10 +172,12 @@ $redirecturl=urlencode(admin_url('admin.php?page=social-media-auto-publish-setti
 	else if(isset($_GET['code']) && isset($_GET['state']) && $_GET['state']==$state)
 	{
 
-		$fields='grant_type=authorization_code&code='.$_GET['code'].'&redirect_uri='.$redirecturl.'&client_id='.$lnappikey.'&client_secret='.$lnapisecret;
-		$ln_acc_tok_json=xyzsmap_getpage('https://www.linkedin.com/uas/oauth2/accessToken', '', false, $fields);
-		$ln_acc_tok_json=$ln_acc_tok_json['content'];
-		
+// 		$fields='grant_type=authorization_code&code='.$_GET['code'].'&redirect_uri='.$redirecturl.'&client_id='.$lnappikey.'&client_secret='.$lnapisecret;
+// 		$ln_acc_tok_json=xyzsmap_getpage('https://www.linkedin.com/uas/oauth2/accessToken', '', false, $fields);
+// 		$ln_acc_tok_json=$ln_acc_tok_json['content'];
+		$url = 'https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code&code='.$_GET['code'].'&redirect_uri='.$redirecturl.'&client_id='.$lnappikey.'&client_secret='.$lnapisecret;
+		$response = wp_remote_post( $url, array('method' => 'POST'));	// Access Token request
+		$ln_acc_tok_json=$response['body'];
 		update_option('xyz_smap_application_lnarray', $ln_acc_tok_json);
 		update_option('xyz_smap_lnaf',0);
 		header("Location:".admin_url('admin.php?page=social-media-auto-publish-settings&msg=4'));
