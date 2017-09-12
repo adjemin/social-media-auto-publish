@@ -23,6 +23,8 @@ if (isset($_GET["ok"])) {
                 <button onclick="location.href='?page=social-media-auto-publish-re&w=f&id=<?= $post->ID ?>'">Riposta su Facebook</button>
                 ::
                 <button onclick="location.href='?page=social-media-auto-publish-re&w=t&id=<?= $post->ID ?>'">Riposta su Twitter</button>
+                ::
+                <button onclick="location.href='?page=social-media-auto-publish-re&w=l&id=<?= $post->ID ?>'">Riposta su Twitter</button>
             </td>
         </tr>
         <?php

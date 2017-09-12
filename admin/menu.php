@@ -56,6 +56,13 @@ function xyz_smap_republish()
                 xyz_link_publish(intval($_GET["id"]));
                 header("Location: admin.php?page=social-media-auto-publish-re&ok=1");
                 return;
+            case "l": // LinkedIn
+                $_POST['xyz_smap_post_permission'] = 0;
+                $_POST['xyz_smap_twpost_permission'] = 0;
+                $_POST['xyz_smap_lnpost_permission'] = 1;
+                xyz_link_publish(intval($_GET["id"]));
+                header("Location: admin.php?page=social-media-auto-publish-re&ok=1");
+                return;
             default:
                 break;
         }
